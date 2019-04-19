@@ -9,14 +9,14 @@ using Phish.Domain;
 
 namespace Phish.ApiClient
 {
-    public class ArtistsDataService : ApiDataServiceBase<Artist,ResponseContainer<Artist>>, IArtistsDataService
+    public class ArtistsDataService : ApiDataServiceBase, IArtistsDataService
     {
         public ArtistsDataService(HttpClient client, IApiClientConfiguration apiClientConfiguration, IMemoryCache memoryCache)
             :base(client,apiClientConfiguration, memoryCache){}
 
         public async Task<IEnumerable<Artist>> GetArtistsAsync()
         {
-            return await GetCachedList<Artist>("artists/all", CacheKeys.Artists);
+            return await GetCachedList<Artist, ResponseContainer<Artist>>("artists/all", CacheKeys.Artists);
         }
     }
 }

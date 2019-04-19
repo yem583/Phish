@@ -7,5 +7,7 @@
         public static string Venues => "_Venues";
 
         public static string Shows => "_Shows";
+
+        public static string ShowLink => "_ShowLink";
     }
 }

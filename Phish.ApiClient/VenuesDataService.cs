@@ -6,14 +6,14 @@ using Phish.Domain;
 
 namespace Phish.ApiClient
 {
-    public class VenuesDataService : ApiDataServiceBase<Venue,ResponseContainer<Venue>>, IVenuesDataService
+    public class VenuesDataService : ApiDataServiceBase, IVenuesDataService
     {
         public VenuesDataService(HttpClient client, IApiClientConfiguration apiClientConfiguration, IMemoryCache memoryCache)
             : base(client, apiClientConfiguration, memoryCache) { }
 
         public async Task<IEnumerable<Venue>> GetVenuesAsync()
         {
-            return await GetCachedList<Venue>("venues/all", CacheKeys.Venues);
+            return await GetCachedList<Venue, ResponseContainer<Venue>>("venues/all", CacheKeys.Venues);
         }
     }
 }
