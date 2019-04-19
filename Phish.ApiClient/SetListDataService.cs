@@ -21,7 +21,7 @@ namespace Phish.ApiClient
             return setLists.FirstOrDefault();
         }
 
-        public async Task<SetList> GetMostRecentSetListAsync()
+        public async Task<SetList> GetLatestSetListAsync()
         {
             var setLists = await GetListAsync<SetList, ResponseContainerWithArray<SetList>>("setlists/latest");
             return setLists.FirstOrDefault();

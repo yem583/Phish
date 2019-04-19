@@ -41,9 +41,9 @@ namespace Phish.WebApi.Controllers
 
         [HttpGet("latest")]
         [ProducesResponseType(typeof(SetList), 200)]
-        public async Task<ActionResult<SetList>> GetMostRecentSetList()
+        public async Task<ActionResult<SetList>> GetLatestSetList()
         {
-            var mostRecentSetList = await _setListDataService.GetMostRecentSetListAsync();
+            var mostRecentSetList = await _setListDataService.GetLatestSetListAsync();
             return mostRecentSetList;
         }
 

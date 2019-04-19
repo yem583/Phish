@@ -8,7 +8,7 @@ namespace Phish.ApiClient
     {
         Task<SetList> GetSetListAsync(int showId);
 
-        Task<SetList> GetMostRecentSetListAsync();
+        Task<SetList> GetLatestSetListAsync();
 
         Task<List<SetList>> GetRecentSetListsAsync(int limit=10);
 
