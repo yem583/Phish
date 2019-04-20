@@ -9,7 +9,7 @@ see https://phishnet.api-docs.io/v3/the-phish-net-api/welcome
 - Uses In Memory Cache with a 24 hour absolute expiration per the api guidelines
 - From https://phishnet.api-docs.io/v3/the-phish-net-api 'We do not permit local storage of our data. We do permit temporary storage during your "grace period," which is 24 hours from the moment of request.'
 
-## Phish.ApiClient.Tests
+## Phish.ApiClient.Tests (.Net Core 2.2)
 - Contains Integration Tests - live api calls
 
 ## Phish.Domain (.Net Standard 2.0)
@@ -18,5 +18,11 @@ see https://phishnet.api-docs.io/v3/the-phish-net-api/welcome
 ## Phish.WebApi (.Net Core 2.2)
 - Rest Api Wrapper for Phish.ApiClient
 
-## Phish.WebApi.Tests
+## Phish.WebApi.Tests (.Net Core 2.2)
 - Contains Integration Tests to exercise the webapi
+
+### Useful tools
+# Visual Studio Extension for viewing/editing Markdown files (this file)
+-if you're reading this readme in raw text, get this markdown editor for much better viewing/editing
+
+![alt text](https://phishapi.blob.core.windows.net/read-me-images/MarkdownEditor.png "Markdown Editor")
