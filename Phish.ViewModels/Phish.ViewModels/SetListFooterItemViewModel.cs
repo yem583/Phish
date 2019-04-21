@@ -1,6 +1,6 @@
 ﻿namespace Phish.ViewModels
 {
-    public class SetListFooterItemModel : ViewModelBase
+    public class SetListFooterItemViewModel : ViewModelBase
     {
         private string _title;
         private string _value;

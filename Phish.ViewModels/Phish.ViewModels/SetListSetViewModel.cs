@@ -3,11 +3,11 @@ using System.Collections.ObjectModel;
 
 namespace Phish.ViewModels
 {
-    public class SetListSetModel:ViewModelBase
+    public class SetListSetViewModel:ViewModelBase
     {
-        public SetListSetModel()
+        public SetListSetViewModel()
         {
-            SetListSongs = new ObservableCollection<SetListSongModel>();
+            SetListSongs = new ObservableCollection<SetListSongViewModel>();
         }
 
         private string _setLabel;
@@ -21,6 +21,6 @@ namespace Phish.ViewModels
             }
         }
 
-        public ObservableCollection<SetListSongModel> SetListSongs { get; set; }
+        public ObservableCollection<SetListSongViewModel> SetListSongs { get; set; }
     }
 }

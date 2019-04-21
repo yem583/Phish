@@ -3,19 +3,19 @@ using Phish.Domain;
 
 namespace Phish.ViewModels
 {
-    public class SetListModel : ViewModelBase
+    public class SetListViewModel : ViewModelBase
     {
-        public SetListModel()
+        public SetListViewModel()
         {
-            Sets = new ObservableCollection<SetListSetModel>();
-            FooterItems = new ObservableCollection<SetListFooterItemModel>();
+            Sets = new ObservableCollection<SetListSetViewModel>();
+            FooterItems = new ObservableCollection<SetListFooterItemViewModel>();
         }
 
         #region Properties
 
-        public ObservableCollection<SetListSetModel> Sets { get; set; }
+        public ObservableCollection<SetListSetViewModel> Sets { get; set; }
 
-        public ObservableCollection<SetListFooterItemModel> FooterItems { get; set; }
+        public ObservableCollection<SetListFooterItemViewModel> FooterItems { get; set; }
 
         private Artist _artist;
         public Artist Artist

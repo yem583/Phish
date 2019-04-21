@@ -1,6 +1,6 @@
 ﻿namespace Phish.ViewModels
 {
-    public class SetListSongModel: ViewModelBase
+    public class SetListSongViewModel: ViewModelBase
     {
         private string _supTitle;
         public string SupTitle
