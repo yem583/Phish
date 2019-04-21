@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using Phish.Domain;
-using Phish.WebApi.Models;
+using Phish.ViewModels;
 
 namespace Phish.WebApi.Tests
 {

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Phish.ApiClient;
 using Phish.Domain;
-using Phish.WebApi.Models;
+using Phish.ViewModels;
 using Phish.WebApi.Services;
 
 namespace Phish.WebApi.Controllers

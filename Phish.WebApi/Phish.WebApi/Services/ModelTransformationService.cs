@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using HtmlAgilityPack;
 using Phish.ApiClient;
 using Phish.Domain;
-using Phish.WebApi.Models;
+using Phish.ViewModels;
+
 
 namespace Phish.WebApi.Services
 {
@@ -55,9 +57,9 @@ namespace Phish.WebApi.Services
             return setListModel;
         }
 
-        private List<SetListFooterItemModel> GetFooterItems(HtmlDocument doc)
+        private ObservableCollection<SetListFooterItemModel> GetFooterItems(HtmlDocument doc)
         {
-            var list = new List<SetListFooterItemModel>();
+            var list = new ObservableCollection<SetListFooterItemModel>();
             var footerSup = doc.DocumentNode.SelectSingleNode("//*[@class='setlist-footer']");
             if (footerSup != null)
             {
@@ -73,9 +75,9 @@ namespace Phish.WebApi.Services
             return list;
         }
 
-        private List<SetListSetModel> GetSetsForSetList(HtmlDocument doc)
+        private ObservableCollection<SetListSetModel> GetSetsForSetList(HtmlDocument doc)
         {
-            var list = new List<SetListSetModel>();
+            var list = new ObservableCollection<SetListSetModel>();
             var sets = doc.DocumentNode.SelectNodes("//*[@class='set-label']");
             foreach (var setNode in sets)
             {
