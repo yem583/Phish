@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Memory;
@@ -14,6 +15,12 @@ namespace Phish.ApiClient
         public async Task<IEnumerable<Venue>> GetVenuesAsync()
         {
             return await GetCachedList<Venue, ResponseContainer<Venue>>("venues/all", CacheKeys.Venues);
+        }
+
+        public async Task<Venue> GetVenueAsync(int venueId)
+        {
+            var allVenues = await GetCachedList<Venue, ResponseContainer<Venue>>("venues/all", CacheKeys.Venues);
+            return allVenues.FirstOrDefault(v => v.VenueId == venueId);
         }
     }
 }

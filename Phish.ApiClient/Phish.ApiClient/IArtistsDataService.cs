@@ -7,5 +7,7 @@ namespace Phish.ApiClient
     public interface IArtistsDataService
     {
         Task<IEnumerable<Artist>> GetArtistsAsync();
+
+        Task<Artist> GetArtistAsync(int artistId);
     }
 }

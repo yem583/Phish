@@ -18,5 +18,11 @@ namespace Phish.ApiClient
         {
             return await GetCachedList<Artist, ResponseContainer<Artist>>("artists/all", CacheKeys.Artists);
         }
+
+        public async Task<Artist> GetArtistAsync(int artistId)
+        {
+            var allArtists = await GetCachedList<Artist, ResponseContainer<Artist>>("artists/all", CacheKeys.Artists);
+            return allArtists.FirstOrDefault(a => a.ArtistId == artistId);
+        }
     }
 }
