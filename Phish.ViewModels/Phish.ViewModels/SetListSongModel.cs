@@ -45,5 +45,16 @@
                 NotifyPropertyChanged();
             }
         }
+
+        private bool _rightIntoNextSong;
+        public bool RightIntoNextSong
+        {
+            get => _rightIntoNextSong;
+            set
+            {
+                _rightIntoNextSong = value;
+                NotifyPropertyChanged();
+            }
+        }
     }
 }
