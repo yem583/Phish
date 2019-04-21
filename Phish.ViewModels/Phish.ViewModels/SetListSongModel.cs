@@ -34,7 +34,7 @@
                 NotifyPropertyChanged();
             }
         }
-
+        
         private string _link;
         public string Link
         {
@@ -53,6 +53,17 @@
             set
             {
                 _rightIntoNextSong = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        private bool _isSetCloser;
+        public bool IsSetCloser
+        {
+            get => _isSetCloser;
+            set
+            {
+                _isSetCloser = value;
                 NotifyPropertyChanged();
             }
         }
