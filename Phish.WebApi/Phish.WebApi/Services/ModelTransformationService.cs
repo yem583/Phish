@@ -89,6 +89,10 @@ namespace Phish.WebApi.Services
                     foreach (var songNode in songs)
                     {
                         var setListSong = new SetListSongModel();
+                        if (songNode.NextSibling.InnerText == " > ")
+                        {
+                            setListSong.RightIntoNextSong = true;
+                        }
                         setListSong.Song = songNode.InnerText;
                         setListSong.Link = songNode.Attributes["href"].Value;
                         var hasSup = songNode.NextSibling?.Name == "sup";

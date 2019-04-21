@@ -17,7 +17,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
     <PackageReference Include="Phish.Domain" Version="2019.4.19.2" />
     <PackageReference Include="Phish.ApiClient" Version="2019.4.21.1" />
-    <PackageReference Include="Phish.ViewModels" Version="2019.4.21.1" />
+    <PackageReference Include="Phish.ViewModels" Version="2019.4.21.2" />
   </ItemGroup>
 
 </Project>
