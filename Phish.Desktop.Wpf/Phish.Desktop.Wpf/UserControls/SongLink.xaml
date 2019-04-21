@@ -15,9 +15,18 @@
             </Hyperlink>
         </TextBlock>
 
+        <TextBlock Text="{Binding SetListSong.SupValue}" ToolTip="{Binding SetListSong.SupTitle}">
+            <TextBlock.LayoutTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleX=".75" ScaleY=".75" />
+                    <TranslateTransform Y="-5" />
+                </TransformGroup>
+            </TextBlock.LayoutTransform>
+        </TextBlock>
+
         <TextBlock Text=" &gt; " Visibility="{Binding SetListSong.RightIntoNextSong, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
-        <TextBlock Text=", " Visibility="{Binding SetListSong.RightIntoNextSong, Converter={StaticResource InvertedBooleanToVisibilityConverter}}" />
+        <TextBlock x:Name="CommaTextBlock" Text=", "  />
 
     </StackPanel>
 

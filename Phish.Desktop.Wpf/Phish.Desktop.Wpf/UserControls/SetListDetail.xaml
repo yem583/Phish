@@ -44,15 +44,26 @@
             FontWeight="Bold"
             Text="{Binding SetList.Location}" />
 
-        <ListView Grid.Row="4" ItemsSource="{Binding SetList.Sets}">
+        <ListView  BorderThickness="0" Grid.Row="4" ItemsSource="{Binding SetList.Sets}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <userControls:SetListSet SetListSetModel="{Binding}"/>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        
-         <ListView Grid.Row="6" ItemsSource="{Binding SetList.FooterItems}">
+
+        <ListView  BorderThickness="0" Grid.Row="6" ItemsSource="{Binding SetList.FooterItems}">
+            <ListView.Style>
+                <Style 
+                    TargetType="{x:Type ListView}" >
+                    <Setter Property="Visibility" Value="Visible" />
+                    <Style.Triggers>
+                        <Trigger Property="HasItems" Value="False">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.Style>
             <ListView.ItemTemplate>
                 <DataTemplate DataType="viewModels:SetListFooterItemModel">
                     <Label ToolTip="{Binding Title}" Content="{Binding Value}"/>
