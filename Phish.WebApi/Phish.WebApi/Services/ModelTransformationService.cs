@@ -101,6 +101,11 @@ namespace Phish.WebApi.Services
                             setListSong.SupValue = songNode.NextSibling.InnerText;
                             setListSong.SupTitle = songNode.NextSibling.Attributes["title"].Value;
                         }
+
+                        if (songNode == songs.Last())
+                        {
+                            setListSong.IsSetCloser = true;
+                        }
                         set.SetListSongs.Add(setListSong);
                     }
                 }
