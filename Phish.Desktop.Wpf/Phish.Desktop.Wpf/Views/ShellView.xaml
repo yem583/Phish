@@ -1,0 +1,58 @@
+﻿<telerik:RadRibbonWindow
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" x:Class="Phish.Desktop.Wpf.Views.ShellView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mvvm="http://prismlibrary.com/"
+             mvvm:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             Title="{Binding Title}">
+    <telerik:RadBusyIndicator IsBusy="{Binding IsBusy}"  DisplayAfter="0">
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <telerik:RadRibbonView 
+                ApplicationName="Phish Facts">
+
+
+                <telerik:RadRibbonTab Header="Music"  >
+                    <telerik:RadRibbonGroup Header="Shows">
+
+                        <telerik:RadRibbonRadioButton Command="{Binding ShowViewCommand}"
+                                                      CommandParameter="UpcomingShowsView"
+                                                      Text="Upcoming Shows" />
+                    </telerik:RadRibbonGroup>
+          
+                    <telerik:RadRibbonGroup Header="Setlists">
+
+                        <telerik:RadRibbonRadioButton Command="{Binding ShowViewCommand}"
+                                                      CommandParameter="RandomSetlistView"
+                                                      Text="Random Setlist" />
+                    </telerik:RadRibbonGroup>
+
+                </telerik:RadRibbonTab>
+
+            </telerik:RadRibbonView>
+
+            <Border Grid.Row="1"  BorderThickness="1" VerticalAlignment="Stretch">
+
+                <telerik:RadDocking CloseButtonPosition="InPane"   mvvm:RegionManager.RegionName="MainContentRegion">
+                    <telerik:RadDocking.DockingPanesFactory>
+                        <telerik:DockingPanesFactory />
+                    </telerik:RadDocking.DockingPanesFactory>
+
+
+
+
+                </telerik:RadDocking>
+            </Border>
+        </Grid>
+
+    </telerik:RadBusyIndicator>
+</telerik:RadRibbonWindow>
