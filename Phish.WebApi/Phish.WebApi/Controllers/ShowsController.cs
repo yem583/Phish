@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Phish.ApiClient;
 using Phish.Domain;
+using Phish.ViewModels;
+using Phish.WebApi.Services;
 
 namespace Phish.WebApi.Controllers
 {
@@ -14,10 +16,12 @@ namespace Phish.WebApi.Controllers
     public class ShowsController : ControllerBase
     {
         private readonly IShowsDataService _showsDataService;
+        private readonly IModelTransformationService _modelTransformationService;
 
-        public ShowsController(IShowsDataService showsDataService)
+        public ShowsController(IShowsDataService showsDataService,IModelTransformationService modelTransformationService)
         {
             _showsDataService = showsDataService;
+            _modelTransformationService = modelTransformationService;
         }
 
         [HttpGet]
@@ -29,11 +33,18 @@ namespace Phish.WebApi.Controllers
         }
 
         [HttpGet("upcoming")]
-        [ProducesResponseType(typeof(IEnumerable<UpcomingShow>), 200)]
-        public async Task<ActionResult<IEnumerable<UpcomingShow>>> GetUpcomingShows()
+        [ProducesResponseType(typeof(IEnumerable<ShowViewModel>), 200)]
+        public async Task<ActionResult<IEnumerable<ShowViewModel>>> GetUpcomingShows()
         {
             var shows = await _showsDataService.GetUpcomingShowsAsync();
-            return shows.ToList();
+            var list = new List<ShowViewModel>();
+            foreach (var show in shows)
+            {
+                var vm = await _modelTransformationService.GetShowViewModelAsync(show);
+                list.Add(vm);
+            }
+
+            return list;
         }
 
         [HttpGet("links/{showId}")]

@@ -1,40 +1,63 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using HtmlAgilityPack;
+using Phish.ApiClient;
+using Phish.Domain;
+using Phish.ViewModels;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
-using HtmlAgilityPack;
-using Phish.ApiClient;
-using Phish.Domain;
-using Phish.ViewModels;
 
 
 namespace Phish.WebApi.Services
 {
-    public interface IModelTransformationService
-    {
-        Task<SetListModel> GetSetListModelAsync(SetList setList);
-    }
-
     public class ModelTransformationService : IModelTransformationService
     {
         private readonly IArtistsDataService _artistsDataService;
         private readonly IVenuesDataService _venuesDataService;
+        private readonly IShowsDataService _showsDataService;
 
         public ModelTransformationService(IArtistsDataService artistsDataService,
-            IVenuesDataService venuesDataService)
+            IVenuesDataService venuesDataService,IShowsDataService showsDataService)
         {
             _artistsDataService = artistsDataService;
             _venuesDataService = venuesDataService;
+            _showsDataService = showsDataService;
         }
 
-        public async Task<SetListModel> GetSetListModelAsync(SetList setList)
+        public async Task<ShowViewModel> GetShowViewModelAsync(UpcomingShow upcomingShow)
+        {
+            var artist = upcomingShow.ArtistId.HasValue ? await _artistsDataService.GetArtistAsync(upcomingShow.ArtistId.Value) : null;
+            var venue = upcomingShow.VenueId.HasValue ? await _venuesDataService.GetVenueAsync(upcomingShow.VenueId.Value) : null;
+            var shows = await _showsDataService.GetShowsAsync();
+            var show = shows.FirstOrDefault(s => s.ShowId == upcomingShow.ShowId);
+            if (show != null)
+            {
+                var showViewModel = new ShowViewModel()
+                {
+                    Venue = venue,
+                    ShowId = show.ShowId,
+                    SetListNotes = show.SetListNotes,
+                    Location = show.Location,
+                    ShowDate = show.ShowDate,
+                    Artist = artist,
+                    BilledAs = show.BilledAs,
+                    Link = show.Link,
+                    TourId = show.TourId,
+                    TourName = show.TourName,
+                    TourWhen = show.TourWhen
+                };
+                return showViewModel;
+            }
+
+            return null;
+        }
+
+        public async Task<SetListViewModel> GetSetListViewModelAsync(SetList setList)
         {
             var artist = setList.ArtistId.HasValue? await _artistsDataService.GetArtistAsync(setList.ArtistId.Value):null;
             var venue = setList.VenuId.HasValue ?await _venuesDataService.GetVenueAsync(setList.VenuId.Value) : null;
 
-            var setListModel = new SetListModel()
+            var setListModel = new SetListViewModel()
             {
                 Artist = artist,
                 Location = setList.Location?.Replace(", USA", ""),
@@ -57,16 +80,16 @@ namespace Phish.WebApi.Services
             return setListModel;
         }
 
-        private ObservableCollection<SetListFooterItemModel> GetFooterItems(HtmlDocument doc)
+        private ObservableCollection<SetListFooterItemViewModel> GetFooterItems(HtmlDocument doc)
         {
-            var list = new ObservableCollection<SetListFooterItemModel>();
+            var list = new ObservableCollection<SetListFooterItemViewModel>();
             var footerSup = doc.DocumentNode.SelectSingleNode("//*[@class='setlist-footer']");
             if (footerSup != null)
             {
                 var items = footerSup.InnerHtml.Split("<br>");
                 foreach (var item in items)
                 {
-                    var setListFooterItem = new SetListFooterItemModel();
+                    var setListFooterItem = new SetListFooterItemViewModel();
                     setListFooterItem.Value = item;
                     list.Add(setListFooterItem);
                 }
@@ -75,20 +98,20 @@ namespace Phish.WebApi.Services
             return list;
         }
 
-        private ObservableCollection<SetListSetModel> GetSetsForSetList(HtmlDocument doc)
+        private ObservableCollection<SetListSetViewModel> GetSetsForSetList(HtmlDocument doc)
         {
-            var list = new ObservableCollection<SetListSetModel>();
+            var list = new ObservableCollection<SetListSetViewModel>();
             var sets = doc.DocumentNode.SelectNodes("//*[@class='set-label']");
             foreach (var setNode in sets)
             {
-                var set = new SetListSetModel();
+                var set = new SetListSetViewModel();
                 set.SetLabel = setNode.InnerText;
                 var songs = setNode.ParentNode.SelectNodes("*[@class='setlist-song']");
                 if (songs != null)
                 {
                     foreach (var songNode in songs)
                     {
-                        var setListSong = new SetListSongModel();
+                        var setListSong = new SetListSongViewModel();
                         if (songNode?.NextSibling?.InnerText == " > ")
                         {
                             setListSong.RightIntoNextSong = true;

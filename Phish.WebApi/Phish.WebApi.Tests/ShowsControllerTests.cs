@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using Phish.Domain;
+using Phish.ViewModels;
 
 namespace Phish.WebApi.Tests
 {
@@ -27,7 +28,7 @@ namespace Phish.WebApi.Tests
             var response = await httpClient.GetAsync("api/shows/upcoming");
             var responseString = await response.Content.ReadAsStringAsync();
             response.EnsureSuccessStatusCode();
-            var upcomingShows = JsonConvert.DeserializeObject<List<Show>>(responseString);
+            var upcomingShows = JsonConvert.DeserializeObject<List<ShowViewModel>>(responseString);
             Assert.IsNotNull(upcomingShows);
         }
 

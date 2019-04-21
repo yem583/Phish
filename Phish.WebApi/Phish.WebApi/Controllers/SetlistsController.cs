@@ -28,10 +28,10 @@ namespace Phish.WebApi.Controllers
         }
 
         [HttpGet("{showId}")]
-        [ProducesResponseType(typeof(SetListModel), 200)]
+        [ProducesResponseType(typeof(SetListViewModel), 200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(typeof(IDictionary<string, string>), 400)]
-        public async Task<ActionResult<SetListModel>> GetSetList(int showId)
+        public async Task<ActionResult<SetListViewModel>> GetSetList(int showId)
         {
             if (showId == 0)
             {
@@ -43,39 +43,39 @@ namespace Phish.WebApi.Controllers
             {
                 return NotFound();
             }
-            var transformed = await _modelTransformationService.GetSetListModelAsync(setList);
+            var transformed = await _modelTransformationService.GetSetListViewModelAsync(setList);
             return transformed;
         }
 
         [HttpGet("latest")]
-        [ProducesResponseType(typeof(SetListModel), 200)]
-        public async Task<ActionResult<SetListModel>> GetLatestSetList()
+        [ProducesResponseType(typeof(SetListViewModel), 200)]
+        public async Task<ActionResult<SetListViewModel>> GetLatestSetList()
         {
             var mostRecentSetList = await _setListDataService.GetLatestSetListAsync();
-            var transformed = await _modelTransformationService.GetSetListModelAsync(mostRecentSetList);
+            var transformed = await _modelTransformationService.GetSetListViewModelAsync(mostRecentSetList);
             return transformed;
         }
 
         [HttpGet("recent")]
-        [ProducesResponseType(typeof(IEnumerable<SetListModel>), 200)]
-        public async Task<ActionResult<IEnumerable<SetListModel>>> GetRecentSetLists()
+        [ProducesResponseType(typeof(IEnumerable<SetListViewModel>), 200)]
+        public async Task<ActionResult<IEnumerable<SetListViewModel>>> GetRecentSetLists()
         {
-            var list = new List<SetListModel>();
+            var list = new List<SetListViewModel>();
             var mostRecentSetList = await _setListDataService.GetRecentSetListsAsync();
             foreach (var recentSetList in mostRecentSetList)
             {
-                var transformed = await _modelTransformationService.GetSetListModelAsync(recentSetList);
+                var transformed = await _modelTransformationService.GetSetListViewModelAsync(recentSetList);
                 list.Add(transformed);
             }
             return list;
         }
 
         [HttpGet("random")]
-        [ProducesResponseType(typeof(SetListModel), 200)]
-        public async Task<ActionResult<SetListModel>> GetRandomSetList()
+        [ProducesResponseType(typeof(SetListViewModel), 200)]
+        public async Task<ActionResult<SetListViewModel>> GetRandomSetList()
         {
             var randomSetList = await _setListDataService.GetRandomSetListAsync();
-            var transformed = await _modelTransformationService.GetSetListModelAsync(randomSetList);
+            var transformed = await _modelTransformationService.GetSetListViewModelAsync(randomSetList);
             return transformed;
         }
     }
