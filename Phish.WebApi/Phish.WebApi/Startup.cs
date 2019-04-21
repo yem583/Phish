@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Phish.ApiClient;
+using Phish.WebApi.Services;
 using Polly;
 
 namespace Phish.WebApi
@@ -39,6 +40,7 @@ namespace Phish.WebApi
                 AddTransientHttpErrorPolicy(p => p.WaitAndRetryAsync(3, _ => TimeSpan.FromMilliseconds(600)));
 
             services.AddScoped<IApiClientConfiguration, ApiClientConfiguration>();
+            services.AddScoped<IModelTransformationService, ModelTransformationService>();
             services.AddSingleton<IConfiguration>(Configuration);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
