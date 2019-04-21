@@ -11,8 +11,13 @@ namespace Phish.ViewModels
             FooterItems = new ObservableCollection<SetListFooterItemModel>();
         }
 
-        private Artist _artist;
+        #region Properties
 
+        public ObservableCollection<SetListSetModel> Sets { get; set; }
+
+        public ObservableCollection<SetListFooterItemModel> FooterItems { get; set; }
+
+        private Artist _artist;
         public Artist Artist
         {
             get => _artist;
@@ -24,7 +29,6 @@ namespace Phish.ViewModels
         }
 
         private Venue _venue;
-
         public Venue Venue
         {
             get => _venue;
@@ -36,7 +40,6 @@ namespace Phish.ViewModels
         }
 
         private string _location;
-
         public string Location
         {
             get => _location;
@@ -48,7 +51,6 @@ namespace Phish.ViewModels
         }
 
         private string _showDate;
-
         public string ShowDate
         {
             get => _showDate;
@@ -60,7 +62,6 @@ namespace Phish.ViewModels
         }
 
         private string _shortDate;
-
         public string ShortDate
         {
             get => _shortDate;
@@ -72,7 +73,6 @@ namespace Phish.ViewModels
         }
 
         private string _longDate;
-
         public string LongDate
         {
             get => _longDate;
@@ -84,7 +84,6 @@ namespace Phish.ViewModels
         }
 
         private string _setListNotes;
-
         public string SetListNotes
         {
             get => _setListNotes;
@@ -96,7 +95,6 @@ namespace Phish.ViewModels
         }
 
         private string _gapChart;
-
         public string GapChart
         {
             get => _gapChart;
@@ -108,7 +106,6 @@ namespace Phish.ViewModels
         }
 
         private decimal? _rating;
-
         public decimal? Rating
         {
             get => _rating;
@@ -120,7 +117,6 @@ namespace Phish.ViewModels
         }
 
         private string _relativeDate;
-
         public string RelativeDate
         {
             get => _relativeDate;
@@ -132,7 +128,6 @@ namespace Phish.ViewModels
         }
 
         private int? _showId;
-
         public int? ShowId
         {
             get => _showId;
@@ -144,7 +139,6 @@ namespace Phish.ViewModels
         }
 
         private string _url;
-
         public string Url
         {
             get => _url;
@@ -155,8 +149,6 @@ namespace Phish.ViewModels
             }
         }
 
-        public ObservableCollection<SetListSetModel> Sets { get; set; }
-
-        public ObservableCollection<SetListFooterItemModel> FooterItems { get; set; }
+        #endregion
     }
 }
