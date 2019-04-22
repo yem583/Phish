@@ -12,7 +12,7 @@ namespace Phish.HttpClient
     {
         protected readonly System.Net.Http.HttpClient Client;
         protected readonly IMemoryCache MemoryCache;
-
+        
         public VenuesDataService(System.Net.Http.HttpClient client,IMemoryCache memoryCache)
         {
             Client = client;
@@ -22,35 +22,42 @@ namespace Phish.HttpClient
 
         public async Task<IEnumerable<Venue>> GetVenuesAsync()
         {
-            var response = await Client.GetAsync("venues");
-            var result = await response.Content.ReadAsStringAsync();
-            response.EnsureSuccessStatusCode();
-            var doc = new HtmlDocument();
-            doc.LoadHtml(result);
-            
-            var list = new List<Venue>();
-            var venueRowNodes = doc.DocumentNode.SelectNodes("//tr");
-            foreach (var venueRowNode in venueRowNodes.Skip(1).ToList())
+            if (!MemoryCache.TryGetValue("_HttpVenues", out IEnumerable<Venue> cacheEntry))
             {
-                var venueCells = venueRowNode.ChildNodes.Where(c => c.Name == "td").ToList();
-                var nameCell = venueCells[0];
-                var venueName = nameCell.InnerText;
-                var venueUrl = nameCell.ChildNodes[0].Attributes["href"].Value.Split('/');
-                var venueId = int.Parse(venueUrl[2]);
-                list.Add(new Venue()
+                var response = await Client.GetAsync("venues");
+                var result = await response.Content.ReadAsStringAsync();
+                response.EnsureSuccessStatusCode();
+                var doc = new HtmlDocument();
+                doc.LoadHtml(result);
+
+                var list = new List<Venue>();
+                var venueRowNodes = doc.DocumentNode.SelectNodes("//tr");
+                foreach (var venueRowNode in venueRowNodes.Skip(1).ToList())
                 {
-                    VenueName = venueName,
-                    VenueId = venueId,
-                    City = venueCells[1].InnerText,
-                    State = venueCells[2].InnerText,
-                    Country = venueCells[3].InnerText,
-                    TimesPlayed = int.Parse(venueCells[4].InnerText),
-                    FirstTime = DateTime.Parse(venueCells[5].InnerText),
-                    LastTime = DateTime.Parse(venueCells[6].InnerText),
-                    Link = Client.BaseAddress.ToString() + nameCell.ChildNodes[0].Attributes["href"].Value.Substring(1)
-                });
+                    var venueCells = venueRowNode.ChildNodes.Where(c => c.Name == "td").ToList();
+                    var nameCell = venueCells[0];
+                    var venueName = nameCell.InnerText;
+                    var venueUrl = nameCell.ChildNodes[0].Attributes["href"].Value.Split('/');
+                    var venueId = int.Parse(venueUrl[2]);
+                    list.Add(new Venue()
+                    {
+                        VenueName = venueName,
+                        VenueId = venueId,
+                        City = venueCells[1].InnerText,
+                        State = venueCells[2].InnerText,
+                        Country = venueCells[3].InnerText,
+                        TimesPlayed = int.Parse(venueCells[4].InnerText),
+                        FirstTime = DateTime.Parse(venueCells[5].InnerText),
+                        LastTime = DateTime.Parse(venueCells[6].InnerText),
+                        Link = Client.BaseAddress.ToString() +
+                               nameCell.ChildNodes[0].Attributes["href"].Value.Substring(1)
+                    });
+                }
+
+                cacheEntry = list;
             }
-            return list;
+
+            return cacheEntry;
         }
     }
 }

@@ -23,6 +23,8 @@ namespace Phish.HttpClient.Tests
             ServiceCollection.AddMemoryCache();
             ServiceCollection.AddHttpClient<IVenuesDataService,VenuesDataService>().
                 AddTransientHttpErrorPolicy(p => p.WaitAndRetryAsync(3, _ => TimeSpan.FromMilliseconds(600)));
+            ServiceCollection.AddHttpClient<ISideShowDataService,SideShowDataService>().
+                AddTransientHttpErrorPolicy(p => p.WaitAndRetryAsync(3, _ => TimeSpan.FromMilliseconds(600)));
 
         }
 
