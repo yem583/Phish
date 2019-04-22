@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace Phish.Domain
 {
@@ -21,6 +22,12 @@ namespace Phish.Domain
 
         [JsonProperty("venueid")]
         public int VenueId { get; set; }
+        
+        public int TimesPlayed { get; set; }
+        
+        public DateTime FirstTime { get; set; }
+
+        public DateTime LastTime { get; set; }
 
     }
 }
