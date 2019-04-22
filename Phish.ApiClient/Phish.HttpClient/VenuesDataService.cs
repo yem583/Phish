@@ -59,5 +59,11 @@ namespace Phish.HttpClient
 
             return cacheEntry;
         }
+
+        public async Task<Venue> GetVenueAsync(int venueId)
+        {
+            var allVenues = await GetVenuesAsync();
+            return allVenues.FirstOrDefault(v => v.VenueId == venueId);
+        }
     }
 }

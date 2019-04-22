@@ -7,5 +7,7 @@ namespace Phish.HttpClient
     public interface IVenuesDataService
     {
         Task<IEnumerable<Venue>> GetVenuesAsync();
+
+        Task<Venue> GetVenueAsync(int venueId);
     }
 }
