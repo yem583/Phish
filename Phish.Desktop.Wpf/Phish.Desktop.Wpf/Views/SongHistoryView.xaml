@@ -1,0 +1,51 @@
+﻿<UserControl
+    x:Class="Phish.Desktop.Wpf.Views.SongHistoryView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mvvm="http://prismlibrary.com/"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+    xmlns:userControls="clr-namespace:Phish.Desktop.Wpf.UserControls"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mvvm:ViewModelLocator.AutoWireViewModel="True"
+    mc:Ignorable="d">
+
+    <telerik:EventToCommandBehavior.EventBindings>
+        <telerik:EventBinding Command="{Binding LoadedCommand}" EventName="Loaded" />
+    </telerik:EventToCommandBehavior.EventBindings>
+
+    <telerik:RadBusyIndicator
+        BusyContent="{Binding IsBusyText}"
+        DisplayAfter="0"
+        IsBusy="{Binding IsBusy}">
+
+        <telerik:RadTabControl>
+            <telerik:RadTabControl.Items>
+                
+                <telerik:RadTabItem Header="All Songs">
+                    <userControls:SongHistoryGrid Songs="{Binding Songs}" />
+                </telerik:RadTabItem>
+                
+                <telerik:RadTabItem Header="Originals">
+                    <userControls:SongHistoryGrid Songs="{Binding Originals}" />
+                </telerik:RadTabItem>
+                
+                <telerik:RadTabItem Header="Covers">
+                    <userControls:SongHistoryGrid Songs="{Binding Covers}" />
+                </telerik:RadTabItem>
+                
+                <telerik:RadTabItem Header="Aliases">
+                    <userControls:SongHistoryGrid Songs="{Binding Aliases}" />
+                </telerik:RadTabItem>
+
+            </telerik:RadTabControl.Items>
+
+        </telerik:RadTabControl>
+
+
+
+    </telerik:RadBusyIndicator>
+
+</UserControl>

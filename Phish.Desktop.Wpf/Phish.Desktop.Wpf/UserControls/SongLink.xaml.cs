@@ -26,7 +26,7 @@ namespace Phish.Desktop.Wpf.UserControls
         }
 
         public static readonly DependencyProperty SetListSongProperty =
-            DependencyProperty.Register("SetListSong", typeof(SetListSongModel),
+            DependencyProperty.Register("SetListSong", typeof(SetListSongViewModel),
                 typeof(SongLink), new UIPropertyMetadata(new PropertyChangedCallback((o, args) =>
                 {
                     var songLink = o as SongLink;
@@ -36,9 +36,9 @@ namespace Phish.Desktop.Wpf.UserControls
                             : Visibility.Hidden;
                 })));
 
-        public SetListSongModel SetListSong
+        public SetListSongViewModel SetListSong
         {
-            get => (SetListSongModel)GetValue(SetListSongProperty);
+            get => (SetListSongViewModel)GetValue(SetListSongProperty);
             set => SetValue(SetListSongProperty, value);
         }
 

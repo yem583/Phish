@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mvvm="http://prismlibrary.com/"
+             WindowState="Maximized"
              mvvm:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
@@ -22,18 +23,38 @@
 
 
                 <telerik:RadRibbonTab Header="Music"  >
-                    <telerik:RadRibbonGroup Header="Shows">
+                    <telerik:RadRibbonGroup Header="Songs">
+
+                        <telerik:RadRibbonRadioButton Command="{Binding ShowViewCommand}"
+                                                      Size="Large"
+                                                      GroupName="Main"
+                                                      SmallImage="{StaticResource SongHistoryImageSourceSmall}"
+                                                      LargeImage="{StaticResource SongHistoryImageSourceLarge}"
+                                                      CommandParameter="SongHistoryView">
+                            <telerik:RadRibbonRadioButton.Content>
+                                <TextBlock>Song History</TextBlock>
+                            </telerik:RadRibbonRadioButton.Content>
+                        </telerik:RadRibbonRadioButton>
+                    </telerik:RadRibbonGroup>
+                    <!--<telerik:RadRibbonGroup Header="Shows">
 
                         <telerik:RadRibbonRadioButton Command="{Binding ShowViewCommand}"
                                                       CommandParameter="UpcomingShowsView"
                                                       Text="Upcoming Shows" />
-                    </telerik:RadRibbonGroup>
+                    </telerik:RadRibbonGroup>-->
           
                     <telerik:RadRibbonGroup Header="Setlists">
 
                         <telerik:RadRibbonRadioButton Command="{Binding ShowViewCommand}"
-                                                      CommandParameter="RandomSetlistView"
-                                                      Text="Random Setlist" />
+                                                      Size="Large"
+                                                      GroupName="Main"
+                                                      SmallImage="{StaticResource SetListImageSourceSmall}"
+                                                      LargeImage="{StaticResource SetListImageSourceLarge}"
+                                                      CommandParameter="RandomSetlistView">
+                            <telerik:RadRibbonRadioButton.Content>
+                                <TextBlock>Random Setlist</TextBlock>
+                            </telerik:RadRibbonRadioButton.Content>
+                        </telerik:RadRibbonRadioButton>
                     </telerik:RadRibbonGroup>
 
                 </telerik:RadRibbonTab>

@@ -27,12 +27,12 @@ namespace Phish.Desktop.Wpf.UserControls
         }
 
         public static readonly DependencyProperty SetListProperty =
-            DependencyProperty.Register("SetList", typeof(SetListModel),
+            DependencyProperty.Register("SetList", typeof(SetListViewModel),
                 typeof(SetListDetail), new UIPropertyMetadata(null));
 
-        public SetListModel SetList
+        public SetListViewModel SetList
         {
-            get => (SetListModel)GetValue(SetListProperty);
+            get => (SetListViewModel)GetValue(SetListProperty);
             set => SetValue(SetListProperty, value);
         }
     }

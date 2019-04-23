@@ -4,10 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mvvm="http://prismlibrary.com/"
+             xmlns:userControls="clr-namespace:Phish.Desktop.Wpf.UserControls"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
              mvvm:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
-    </Grid>
+    <telerik:EventToCommandBehavior.EventBindings>
+        <telerik:EventBinding Command="{Binding LoadedCommand}" EventName="Loaded" />
+    </telerik:EventToCommandBehavior.EventBindings>
+    <telerik:RadBusyIndicator IsBusy="{Binding IsBusy}" BusyContent="{Binding IsBusyText}"  DisplayAfter="0">
+        <userControls:ShowsGrid Shows="{Binding UpcomingShows}"/>
+    </telerik:RadBusyIndicator>
 </UserControl>

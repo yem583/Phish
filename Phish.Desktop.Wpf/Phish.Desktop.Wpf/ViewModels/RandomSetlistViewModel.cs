@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Media.Imaging;
 using Phish.Desktop.Wpf.Services;
 using Phish.ViewModels;
 using DelegateCommand = Prism.Commands.DelegateCommand;
@@ -20,8 +22,10 @@ namespace Phish.Desktop.Wpf.ViewModels
 
         public string PageHeaderText => $"{SetList?.Artist?.Name}, {SetList?.LongDate}";
 
-        private SetListModel _setList;
-        public SetListModel SetList
+        public BitmapImage HeaderImageSource => Application.Current.FindResource("SetListImageSourceSmall") as BitmapImage;
+
+        private SetListViewModel _setList;
+        public SetListViewModel SetList
         {
             get => _setList;
             set { _setList = value; RaisePropertyChanged(); }
@@ -35,17 +39,27 @@ namespace Phish.Desktop.Wpf.ViewModels
             await LoadAsync();
         }
 
-        private bool _isLoading;
+        private DelegateCommand _refreshCommand;
+        public DelegateCommand RefreshCommand => _refreshCommand ?? (_refreshCommand = new DelegateCommand(RefreshCommandExecute, () => true));
 
+        protected async void RefreshCommandExecute()
+        {
+            _isLoaded = false;
+            await LoadAsync();
+        }
+
+        private bool _isLoading;
+        private bool _isLoaded;
         private async Task<bool> LoadAsync()
         {
-            if (_isLoading)
+            if (_isLoading || _isLoaded)
             {
                 return false;
             }
 
             _isLoading = true;
             IsBusy = true;
+            IsBusyText = "Loading Random SetList...";
             await Task.Run(function: async () =>
             {
                 var randomSetlist = await _webApiClientService.GetRandomSetlistAsync();
@@ -73,6 +87,7 @@ namespace Phish.Desktop.Wpf.ViewModels
                     {
                         IsBusy = false;
                         _isLoading = false;
+                        _isLoaded = true;
                     }
                 }, TaskScheduler.FromCurrentSynchronizationContext());
             return true;

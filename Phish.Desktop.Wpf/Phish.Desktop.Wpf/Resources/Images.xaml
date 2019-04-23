@@ -1,7 +1,15 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:Colonial.Tests.Resources">
-    <ResourceDictionary.MergedDictionaries>
-        
-    </ResourceDictionary.MergedDictionaries>
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <BitmapImage x:Key="RefreshImageSource" UriSource="/Images/Refresh_16x.png"  />
+    
+    <BitmapImage x:Key="CancelImageSourceSmall" UriSource="/Images/Cancel_16x.png"  />
+
+    <BitmapImage x:Key="CancelImageSourceLarge" UriSource="/Images/Cancel_32x.png"  />
+
+    <BitmapImage x:Key="SongHistoryImageSourceSmall" UriSource="/Images/History_16x.png"  />
+    <BitmapImage x:Key="SongHistoryImageSourceLarge" UriSource="/Images/History_32x.png"  />
+
+    <BitmapImage x:Key="SetListImageSourceSmall" UriSource="/Images/Log_16x.png"  />
+    <BitmapImage x:Key="SetListImageSourceLarge" UriSource="/Images/Log_32x.png"  />
 </ResourceDictionary>
