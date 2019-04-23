@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using Phish.HttpClient;
 
 
 namespace Phish.WebApi.Services
@@ -13,15 +14,18 @@ namespace Phish.WebApi.Services
     public class ModelTransformationService : IModelTransformationService
     {
         private readonly IArtistsDataService _artistsDataService;
-        private readonly IVenuesDataService _venuesDataService;
+        private readonly HttpClient.IVenuesDataService _venuesDataService;
         private readonly IShowsDataService _showsDataService;
+        private readonly ISideShowDataService _sideShowDataService;
 
         public ModelTransformationService(IArtistsDataService artistsDataService,
-            IVenuesDataService venuesDataService,IShowsDataService showsDataService)
+            HttpClient.IVenuesDataService venuesDataService,IShowsDataService showsDataService,
+            ISideShowDataService sideShowDataService)
         {
             _artistsDataService = artistsDataService;
             _venuesDataService = venuesDataService;
             _showsDataService = showsDataService;
+            _sideShowDataService = sideShowDataService;
         }
 
         public async Task<ShowViewModel> GetShowViewModelAsync(UpcomingShow upcomingShow)
@@ -29,6 +33,7 @@ namespace Phish.WebApi.Services
             var artist = upcomingShow.ArtistId.HasValue ? await _artistsDataService.GetArtistAsync(upcomingShow.ArtistId.Value) : null;
             var venue = upcomingShow.VenueId.HasValue ? await _venuesDataService.GetVenueAsync(upcomingShow.VenueId.Value) : null;
             var shows = await _showsDataService.GetShowsAsync();
+            var sideShows = await _sideShowDataService.GetSideShowsAsync();
             var show = shows.FirstOrDefault(s => s.ShowId == upcomingShow.ShowId);
             if (show != null)
             {
@@ -47,6 +52,28 @@ namespace Phish.WebApi.Services
                     TourWhen = show.TourWhen
                 };
                 return showViewModel;
+            }
+            else
+            {
+                show = sideShows.FirstOrDefault(s => upcomingShow.ShowDate == s.ShowDate && upcomingShow.ArtistId == s.ArtistId);
+                if (show != null)
+                {
+                    var showViewModel = new ShowViewModel()
+                    {
+                        Venue = venue,
+                        ShowId = show.ShowId,
+                        SetListNotes = show.SetListNotes,
+                        Location = show.Location,
+                        ShowDate = show.ShowDate,
+                        Artist = artist,
+                        BilledAs = show.BilledAs,
+                        Link = show.Link,
+                        TourId = show.TourId,
+                        TourName = show.TourName,
+                        TourWhen = show.TourWhen
+                    };
+                    return showViewModel;
+                }
             }
 
             return null;

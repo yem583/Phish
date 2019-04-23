@@ -13,16 +13,16 @@ namespace Phish.WebApi.Controllers
     [ApiController]
     public class VenuesController : ControllerBase
     {
-        private readonly IVenuesDataService _venuesDataService;
+        private readonly HttpClient.IVenuesDataService _venuesDataService;
 
-        public VenuesController(IVenuesDataService venuesDataService)
+        public VenuesController(HttpClient.IVenuesDataService venuesDataService)
         {
             _venuesDataService = venuesDataService;
         }
 
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<Venue>), 200)]
-        public async Task<ActionResult<IEnumerable<Venue>>> GetClients()
+        public async Task<ActionResult<IEnumerable<Venue>>> GetVenues()
         {
             var venues = await _venuesDataService.GetVenuesAsync();
             return venues.ToList();
@@ -32,7 +32,7 @@ namespace Phish.WebApi.Controllers
         [ProducesResponseType(typeof(Venue), 200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(typeof(IDictionary<string, string>), 400)]
-        public async Task<ActionResult<Venue>> GetArtist(int venueId)
+        public async Task<ActionResult<Venue>> GetVenue(int venueId)
         {
             if (venueId == 0)
             {

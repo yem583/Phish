@@ -34,9 +34,9 @@ namespace Phish.WebApi.Tests
         protected IServiceProvider ServiceProvider => _serviceProvider ?? (_serviceProvider = ServiceCollection.BuildServiceProvider());
 
 
-        protected HttpClient GetHttpClient()
+        protected System.Net.Http.HttpClient GetHttpClient()
         {
-            var httpClient = new HttpClient();
+            var httpClient = new System.Net.Http.HttpClient();
             httpClient.BaseAddress = new Uri(WebApiBaseUrl);
             return httpClient;
         }

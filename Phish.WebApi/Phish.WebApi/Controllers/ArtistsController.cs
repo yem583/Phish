@@ -21,7 +21,7 @@ namespace Phish.WebApi.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<Artist>), 200)]
-        public async Task<ActionResult<IEnumerable<Artist>>> GetClients()
+        public async Task<ActionResult<IEnumerable<Artist>>> GetArtists()
         {
             var artists = await _artistsDataService.GetArtistsAsync();
             return artists.ToList();
