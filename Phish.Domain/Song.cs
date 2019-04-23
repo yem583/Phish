@@ -15,5 +15,11 @@ namespace Phish.Domain
         public DateTime? Last { get; set; }
 
         public int? Gap { get; set; }
+
+        public bool IsOriginal { get; set; }
+
+        public bool IsCover { get; set; }
+
+        public bool IsAlias { get; set; }
     }
 }
