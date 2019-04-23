@@ -71,7 +71,7 @@ namespace Phish.HttpClient
                     OriginalArtist = originalArtistCell?.InnerText,
                     OriginalArtistLink = originalArtistUrl,
                     Times = timesCell?.InnerText,
-                    TimeLink = timesUrl,
+                    TimesLink = timesUrl,
                     IsAlias = classes.Contains("aliases"),
                     IsCover = classes.Contains("covers"),
                     IsOriginal = classes.Contains("originals"),
