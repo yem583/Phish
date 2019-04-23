@@ -14,7 +14,7 @@ namespace Phish.Domain
 
         public string Times { get; set; }
 
-        public string TimeLink { get; set; }
+        public string TimesLink { get; set; }
 
         public DateTime? Debut { get; set; }
 
