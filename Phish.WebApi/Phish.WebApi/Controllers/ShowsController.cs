@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Phish.ApiClient;
 using Phish.Domain;
-using Phish.ViewModels;
-using Phish.WebApi.Services;
+using Phish.HttpClient;
 
 namespace Phish.WebApi.Controllers
 {
@@ -15,44 +11,20 @@ namespace Phish.WebApi.Controllers
     [ApiController]
     public class ShowsController : ControllerBase
     {
-        private readonly IShowsDataService _showsDataService;
-        private readonly IModelTransformationService _modelTransformationService;
-
-        public ShowsController(IShowsDataService showsDataService,IModelTransformationService modelTransformationService)
+        private readonly IUpcomingShowsDataService _upcomingShowsDataService;
+   
+        public ShowsController(IUpcomingShowsDataService upcomingShowsDataService)
         {
-            _showsDataService = showsDataService;
-            _modelTransformationService = modelTransformationService;
-        }
-
-        [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<Show>), 200)]
-        public async Task<ActionResult<IEnumerable<Show>>> GetShows()
-        {
-            var shows = await _showsDataService.GetShowsAsync();
-            return shows.ToList();
+            _upcomingShowsDataService = upcomingShowsDataService;
         }
 
         [HttpGet("upcoming")]
-        [ProducesResponseType(typeof(IEnumerable<ShowViewModel>), 200)]
-        public async Task<ActionResult<IEnumerable<ShowViewModel>>> GetUpcomingShows()
+        [ProducesResponseType(typeof(IEnumerable<UpcomingShow>), 200)]
+        public async Task<ActionResult<IEnumerable<UpcomingShow>>> GetUpcomingShows()
         {
-            var shows = await _showsDataService.GetUpcomingShowsAsync();
-            var list = new List<ShowViewModel>();
-            foreach (var show in shows)
-            {
-                var vm = await _modelTransformationService.GetShowViewModelAsync(show);
-                list.Add(vm);
-            }
-
-            return list;
+            var shows = await _upcomingShowsDataService.GetUpcomingShowsAsync();
+            return shows.ToList();
         }
 
-        [HttpGet("links/{showId}")]
-        [ProducesResponseType(typeof(IEnumerable<ShowLink>), 200)]
-        public async Task<ActionResult<IEnumerable<ShowLink>>> GetShowLinks(int showId)
-        {
-            var showLinks = await _showsDataService.GetShowLinksAsync(showId);
-            return showLinks.ToList();
-        }
     }
 }

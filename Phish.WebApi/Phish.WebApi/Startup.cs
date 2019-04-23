@@ -10,12 +10,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Phish.ApiClient;
+
 using Phish.HttpClient;
 using Phish.WebApi.Services;
 using Polly;
-using IVenuesDataService = Phish.ApiClient.IVenuesDataService;
-using VenuesDataService = Phish.ApiClient.VenuesDataService;
+
 
 namespace Phish.WebApi
 {
@@ -33,24 +32,15 @@ namespace Phish.WebApi
         {
             services.AddMemoryCache();
 
-            services.AddHttpClient<IArtistsDataService, ArtistsDataService>().
-                AddTransientHttpErrorPolicy(p => p.WaitAndRetryAsync(3, _ => TimeSpan.FromMilliseconds(600)));
-            services.AddHttpClient<IVenuesDataService, VenuesDataService>().
-                AddTransientHttpErrorPolicy(p => p.WaitAndRetryAsync(3, _ => TimeSpan.FromMilliseconds(600)));
-            services.AddHttpClient<IShowsDataService, ShowsDataService>().
-                AddTransientHttpErrorPolicy(p => p.WaitAndRetryAsync(3, _ => TimeSpan.FromMilliseconds(600)));
-            services.AddHttpClient<ISetListDataService, SetListDataService>().
-                AddTransientHttpErrorPolicy(p => p.WaitAndRetryAsync(3, _ => TimeSpan.FromMilliseconds(600)));
-
             services.AddHttpClient<Phish.HttpClient.IVenuesDataService, Phish.HttpClient.VenuesDataService>().
                 AddTransientHttpErrorPolicy(p => p.WaitAndRetryAsync(3, _ => TimeSpan.FromMilliseconds(600)));
             services.AddHttpClient<ISideShowDataService, SideShowDataService>().
                 AddTransientHttpErrorPolicy(p => p.WaitAndRetryAsync(3, _ => TimeSpan.FromMilliseconds(600)));
             services.AddHttpClient<ISongDataService, SongDataService>().
                 AddTransientHttpErrorPolicy(p => p.WaitAndRetryAsync(3, _ => TimeSpan.FromMilliseconds(600)));
+            services.AddHttpClient<IUpcomingShowsDataService,UpcomingShowsDataService>().
+                AddTransientHttpErrorPolicy(p => p.WaitAndRetryAsync(3, _ => TimeSpan.FromMilliseconds(600)));
 
-            services.AddScoped<IApiClientConfiguration, ApiClientConfiguration>();
-            services.AddScoped<IModelTransformationService, ModelTransformationService>();
             services.AddSingleton<IConfiguration>(Configuration);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
