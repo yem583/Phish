@@ -7,7 +7,7 @@
   <ItemGroup>
     <PackageReference Include="HtmlAgilityPack" Version="1.11.3" />
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="2.2.0" />
-    <PackageReference Include="Phish.Domain" Version="2019.4.22.1" />
+    <PackageReference Include="Phish.Domain" Version="2019.4.23.3" />
   </ItemGroup>
 
 </Project>
