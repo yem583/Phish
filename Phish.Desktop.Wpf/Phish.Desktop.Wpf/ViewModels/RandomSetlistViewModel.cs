@@ -22,7 +22,7 @@ namespace Phish.Desktop.Wpf.ViewModels
 
         public string PageHeaderText => $"{SetList?.Artist?.Name}, {SetList?.LongDate}";
 
-        public BitmapImage HeaderImageSource => Application.Current.FindResource("SetListImageSourceSmall") as BitmapImage;
+        public BitmapImage HeaderImageSource => Application.Current.FindResource("SetListImageSourceLarge") as BitmapImage;
 
         private SetListViewModel _setList;
         public SetListViewModel SetList

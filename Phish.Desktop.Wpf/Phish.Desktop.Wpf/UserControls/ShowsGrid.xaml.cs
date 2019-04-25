@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Phish.Domain;
 using Phish.ViewModels;
 
 namespace Phish.Desktop.Wpf.UserControls
@@ -26,12 +27,12 @@ namespace Phish.Desktop.Wpf.UserControls
         }
 
         public static readonly DependencyProperty ShowsProperty =
-            DependencyProperty.Register("Shows", typeof(ObservableCollection<ShowViewModel>),
+            DependencyProperty.Register("Shows", typeof(ObservableCollection<UpcomingShow>),
                 typeof(ShowsGrid), new UIPropertyMetadata(null));
 
-        public ObservableCollection<ShowViewModel> Shows
+        public ObservableCollection<UpcomingShow> Shows
         {
-            get => (ObservableCollection<ShowViewModel>)GetValue(ShowsProperty);
+            get => (ObservableCollection<UpcomingShow>)GetValue(ShowsProperty);
             set => SetValue(ShowsProperty, value);
         }
     }

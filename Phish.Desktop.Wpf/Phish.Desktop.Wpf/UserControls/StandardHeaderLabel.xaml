@@ -9,7 +9,7 @@
              x:Name="UserControl">
 
     <StackPanel DataContext="{Binding ElementName=UserControl}" Orientation="Horizontal" HorizontalAlignment="Center">
-        <Image VerticalAlignment="Center" Source="{Binding Icon}" Width="16" Height="16"/>
+        <Image VerticalAlignment="Center" Source="{Binding Icon}" Width="32" Height="32"/>
         <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" TextWrapping="Wrap" Text="{Binding PageHeaderText}" FontWeight="Bold" FontSize="18" />
     </StackPanel>
 

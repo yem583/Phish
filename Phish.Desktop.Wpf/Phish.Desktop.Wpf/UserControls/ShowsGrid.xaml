@@ -6,38 +6,61 @@
     xmlns:local="clr-namespace:Phish.Desktop.Wpf.UserControls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+    x:Name="UserControl"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    mc:Ignorable="d"
-    x:Name="UserControl">
+    mc:Ignorable="d">
 
-    <telerik:RadGridView AutoGenerateColumns="False" ShowGroupPanel="False" SelectionMode="Single" IsFilteringAllowed="True"
-                         ColumnWidth="Auto" Margin="5"
-        DataContext="{Binding ElementName=UserControl}" ItemsSource="{Binding Shows}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="5" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-        <telerik:RadGridView.Columns>
-            <telerik:GridViewDataColumn
-                DataMemberBinding="{Binding BilledAs}"
-                Header="Artist"
-                HeaderTextAlignment="Right"
-                HeaderTextWrapping="Wrap"
-                IsReadOnly="True"
-                TextAlignment="Right" />
-            <telerik:GridViewDataColumn
-                DataMemberBinding="{Binding ShowDate}"
-                Header="Show Date"
-                HeaderTextWrapping="Wrap"
-                IsReadOnly="True" />
-            <telerik:GridViewDataColumn
-                DataMemberBinding="{Binding Venue.VenueName}"
-                Header="Venue"
-                HeaderTextWrapping="Wrap"
-                IsReadOnly="True" />
-            <telerik:GridViewDataColumn
-                DataMemberBinding="{Binding Location}"
-                Header="Location"
-                HeaderTextWrapping="Wrap"
-                IsReadOnly="True" />
-        </telerik:RadGridView.Columns>
-    </telerik:RadGridView>
+        <local:StandardHeaderGridView
+            AddNewButtonVisibility="Hidden"
+            RadGridView="{Binding ElementName=RadGridView}"
+            ReloadCommand="{Binding RefreshCommand}" />
+
+        <telerik:RadGridView
+            x:Name="RadGridView"
+            Grid.Row="2"
+            Margin="5"
+            AutoGenerateColumns="False"
+            ColumnWidth="Auto"
+            DataContext="{Binding ElementName=UserControl}"
+            IsFilteringAllowed="True"
+            ItemsSource="{Binding Shows}"
+            SelectionMode="Single"
+            ShowGroupPanel="False">
+
+            <telerik:RadGridView.Columns>
+                <telerik:GridViewDataColumn
+                    DataMemberBinding="{Binding Artist}"
+                    Header="Artist"
+                    HeaderTextWrapping="Wrap"
+                    IsReadOnly="True"
+                    />
+                <telerik:GridViewDataColumn
+                    DataMemberBinding="{Binding Date}"
+                    DataFormatString="d"
+                    HeaderTextAlignment="Right"
+                    Header="Show Date"
+                    TextAlignment="Right"
+                    HeaderTextWrapping="Wrap"
+                    IsReadOnly="True" />
+                <telerik:GridViewDataColumn
+                    DataMemberBinding="{Binding Venue}"
+                    Header="Venue"
+                    HeaderTextWrapping="Wrap"
+                    IsReadOnly="True" />
+                <telerik:GridViewDataColumn
+                    DataMemberBinding="{Binding Location}"
+                    Header="Location"
+                    HeaderTextWrapping="Wrap"
+                    IsReadOnly="True" />
+            </telerik:RadGridView.Columns>
+        </telerik:RadGridView>
+    </Grid>
 </UserControl>

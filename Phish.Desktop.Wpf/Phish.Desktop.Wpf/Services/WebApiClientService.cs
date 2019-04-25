@@ -36,12 +36,12 @@ namespace Phish.Desktop.Wpf.Services
             return songs;
         }
 
-        public async Task<List<ShowViewModel>> GetUpcomingShowsAsync()
+        public async Task<List<UpcomingShow>> GetUpcomingShowsAsync()
         {
             var result = await _httpClient.GetAsync("http://api.phishfact.com/api/shows/upcoming");
             var response = await result.Content.ReadAsStringAsync();
             result.EnsureSuccessStatusCode();
-            var setList = JsonConvert.DeserializeObject<List<ShowViewModel>>(response);
+            var setList = JsonConvert.DeserializeObject<List<UpcomingShow>>(response);
             return setList;
         }
     }

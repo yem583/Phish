@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,7 +30,7 @@ namespace Phish.Desktop.Wpf.ViewModels
 
         public string PageHeaderText => "Song History";
 
-        public  BitmapImage HeaderImageSource => Application.Current.FindResource("SongHistoryImageSourceSmall") as BitmapImage;
+        public BitmapImage HeaderImageSource => Application.Current.FindResource("SongHistoryImageSourceLarge") as BitmapImage;
 
         public ObservableCollection<Song> Songs { get; set; }
 
@@ -110,9 +112,23 @@ namespace Phish.Desktop.Wpf.ViewModels
                         IsBusy = false;
                         _isLoading = false;
                         _isLoaded = true;
+                        task.Dispose();
                     }
                 }, TaskScheduler.FromCurrentSynchronizationContext());
             return true;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            Songs.Clear();
+            Originals.Clear();
+            Covers.Clear();
+            Aliases.Clear();
+            Songs = null;
+            Originals = null;
+            Covers = null;
+            Aliases = null;
+            base.Dispose(disposing);
         }
     }
 }

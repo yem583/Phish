@@ -12,4 +12,7 @@
 
     <BitmapImage x:Key="SetListImageSourceSmall" UriSource="/Images/Log_16x.png"  />
     <BitmapImage x:Key="SetListImageSourceLarge" UriSource="/Images/Log_32x.png"  />
+
+    <BitmapImage x:Key="UpcomingShowsImageSourceSmall" UriSource="/Images/GlobalCalendar_16x.png"  />
+    <BitmapImage x:Key="UpcomingShowsImageSourceLarge" UriSource="/Images/GlobalCalendar_16x_32x.png"  />
 </ResourceDictionary>

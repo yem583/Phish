@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Media.Imaging;
 using Phish.Desktop.Wpf.Services;
+using Phish.Domain;
 using Phish.ViewModels;
 using Prism.Commands;
 
@@ -17,12 +20,23 @@ namespace Phish.Desktop.Wpf.ViewModels
         {
             _webApiClientService = webApiClientService;
             _alertManagerService = alertManagerService;
-            UpcomingShows = new ObservableCollection<ShowViewModel>();
+            UpcomingShows = new ObservableCollection<UpcomingShow>();
         }
 
         public string PageHeaderText => "Upcoming Shows";
+    
+        public BitmapImage HeaderImageSource => Application.Current.FindResource("UpcomingShowsImageSourceLarge") as BitmapImage;
 
-        public ObservableCollection<ShowViewModel> UpcomingShows { get; set; }
+        public ObservableCollection<UpcomingShow> UpcomingShows { get; set; }
+
+        private DelegateCommand _refreshCommand;
+        public DelegateCommand RefreshCommand => _refreshCommand ?? (_refreshCommand = new DelegateCommand(RefreshCommandExecute, () => true));
+
+        protected async void RefreshCommandExecute()
+        {
+            _isLoaded = false;
+            await LoadAsync();
+        }
 
         private DelegateCommand _loadedCommand;
 
@@ -34,6 +48,7 @@ namespace Phish.Desktop.Wpf.ViewModels
         }
 
         private bool _isLoading;
+        private bool _isLoaded;
 
         private async Task<bool> LoadAsync()
         {
@@ -71,6 +86,7 @@ namespace Phish.Desktop.Wpf.ViewModels
                     {
                         IsBusy = false;
                         _isLoading = false;
+                        _isLoaded = true;
                     }
                 }, TaskScheduler.FromCurrentSynchronizationContext());
             return true;

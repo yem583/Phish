@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using Phish.Desktop.Wpf.Events;
+using Phish.Desktop.Wpf.Views;
 using Prism.Events;
 using Prism.Ioc;
 using Prism.Regions;
@@ -51,9 +52,16 @@ namespace Phish.Desktop.Wpf.Services
             RadDocumentPane radDocumentPane = null;
             if (viewExists == null)
             {
-                var view = _container.Resolve(GetViewClassType(showView.ViewIdentifier));
+                var childScope = _container.CreateChildContainer();
+                var view = childScope.Resolve(GetViewClassType(showView.ViewIdentifier));
+                var viewModel = childScope.Resolve(GetViewModelClassType(showView.ViewIdentifier));
                 radDocumentPane = new RadDocumentPane();
+                radDocumentPane.DataContext = viewModel;
                 radDocumentPane.Content = view;
+                if (radDocumentPane.Content is MyViewBase @base)
+                {
+                    @base.ViewContainer = childScope;
+                }
                 radDocumentPane.Tag = showView.Id;
                 radDocumentPane.HeaderTemplate = Application.Current.FindResource("RadDocumentPaneHeaderTemplate") as DataTemplate;
                 var myBinding = new Binding();
@@ -74,6 +82,11 @@ namespace Phish.Desktop.Wpf.Services
         public static Type GetViewClassType(string viewIdentifier)
         {
             return Type.GetType($"Phish.Desktop.Wpf.Views.{viewIdentifier}");
+        }
+
+        public static Type GetViewModelClassType(string viewIdentifier)
+        {
+            return Type.GetType($"Phish.Desktop.Wpf.ViewModels.{viewIdentifier}Model");
         }
     }
 }

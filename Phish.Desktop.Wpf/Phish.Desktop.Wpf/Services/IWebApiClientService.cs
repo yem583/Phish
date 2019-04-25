@@ -9,7 +9,7 @@ namespace Phish.Desktop.Wpf.Services
     {
         Task<SetListViewModel> GetRandomSetlistAsync();
 
-        Task<List<ShowViewModel>> GetUpcomingShowsAsync();
+        Task<List<UpcomingShow>> GetUpcomingShowsAsync();
 
         Task<IEnumerable<Song>> GetSongsAsync();
     }

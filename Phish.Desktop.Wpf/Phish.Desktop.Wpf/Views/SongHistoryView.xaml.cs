@@ -16,7 +16,7 @@ namespace Phish.Desktop.Wpf.Views
     /// <summary>
     /// Interaction logic for SongHistoryView.xaml
     /// </summary>
-    public partial class SongHistoryView : UserControl
+    public partial class SongHistoryView : MyViewBase
     {
         public SongHistoryView()
         {

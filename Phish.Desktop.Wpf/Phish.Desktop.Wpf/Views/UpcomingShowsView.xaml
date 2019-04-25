@@ -12,7 +12,9 @@
     <telerik:EventToCommandBehavior.EventBindings>
         <telerik:EventBinding Command="{Binding LoadedCommand}" EventName="Loaded" />
     </telerik:EventToCommandBehavior.EventBindings>
+    
     <telerik:RadBusyIndicator IsBusy="{Binding IsBusy}" BusyContent="{Binding IsBusyText}"  DisplayAfter="0">
         <userControls:ShowsGrid Shows="{Binding UpcomingShows}"/>
     </telerik:RadBusyIndicator>
+
 </UserControl>

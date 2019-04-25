@@ -16,7 +16,7 @@ namespace Phish.Desktop.Wpf.Views
     /// <summary>
     /// Interaction logic for RandomSetlistView.xaml
     /// </summary>
-    public partial class RandomSetlistView : UserControl
+    public partial class RandomSetlistView : MyViewBase
     {
         public RandomSetlistView()
         {

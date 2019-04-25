@@ -36,16 +36,20 @@
                             </telerik:RadRibbonRadioButton.Content>
                         </telerik:RadRibbonRadioButton>
                     </telerik:RadRibbonGroup>
-                    <!--<telerik:RadRibbonGroup Header="Shows">
+                    <telerik:RadRibbonGroup Header="Shows">
 
                         <telerik:RadRibbonRadioButton Command="{Binding ShowViewCommand}"
+                                                      Size="Large"
+                                                      GroupName="Main"
+                                                      SmallImage="{StaticResource UpcomingShowsImageSourceSmall}"
+                                                      LargeImage="{StaticResource UpcomingShowsImageSourceLarge}"
                                                       CommandParameter="UpcomingShowsView"
                                                       Text="Upcoming Shows" />
-                    </telerik:RadRibbonGroup>-->
+                    </telerik:RadRibbonGroup>
           
                     <telerik:RadRibbonGroup Header="Setlists">
 
-                        <telerik:RadRibbonRadioButton Command="{Binding ShowViewCommand}"
+                        <!--<telerik:RadRibbonRadioButton Command="{Binding ShowViewCommand}"
                                                       Size="Large"
                                                       GroupName="Main"
                                                       SmallImage="{StaticResource SetListImageSourceSmall}"
@@ -54,7 +58,7 @@
                             <telerik:RadRibbonRadioButton.Content>
                                 <TextBlock>Random Setlist</TextBlock>
                             </telerik:RadRibbonRadioButton.Content>
-                        </telerik:RadRibbonRadioButton>
+                        </telerik:RadRibbonRadioButton>-->
                     </telerik:RadRibbonGroup>
 
                 </telerik:RadRibbonTab>
@@ -64,6 +68,9 @@
             <Border Grid.Row="1"  BorderThickness="1" VerticalAlignment="Stretch">
 
                 <telerik:RadDocking CloseButtonPosition="InPane"   mvvm:RegionManager.RegionName="MainContentRegion">
+                    <telerik:EventToCommandBehavior.EventBindings>
+                        <telerik:EventBinding Command="{Binding CloseCommand}" PassEventArgsToCommand="True" EventName="Close" />
+                    </telerik:EventToCommandBehavior.EventBindings>
                     <telerik:RadDocking.DockingPanesFactory>
                         <telerik:DockingPanesFactory />
                     </telerik:RadDocking.DockingPanesFactory>
