@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Controls;
 using Phish.Desktop.Wpf.Events;
+using Phish.Desktop.Wpf.Services;
 using Phish.Desktop.Wpf.Views;
 using Prism.Commands;
 using Prism.Events;
@@ -19,7 +20,9 @@ namespace Phish.Desktop.Wpf.ViewModels
         private readonly IRegionManager _regionManager;
         public string Title => "Phish Facts";
 
-        public ShellViewModel(IEventAggregator eventAggregator, IRegionManager regionManager)
+        public ShellViewModel(IEventAggregator eventAggregator, IRegionManager regionManager,
+            IWebApiClientService apiClientService,IAlertManagerService alertManagerService)
+        :base(apiClientService,alertManagerService)
         {
             _eventAggregator = eventAggregator;
             _regionManager = regionManager;

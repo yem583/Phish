@@ -11,13 +11,11 @@ namespace Phish.Desktop.Wpf.ViewModels
 {
     public class RandomSetlistViewModel : BusyAwareViewModelBase
     {
-        private readonly IWebApiClientService _webApiClientService;
-        private readonly IAlertManagerService _alertManagerService;
-
+ 
         public RandomSetlistViewModel(IWebApiClientService webApiClientService, IAlertManagerService alertManagerService)
+        :base(webApiClientService,alertManagerService)
         {
-            _webApiClientService = webApiClientService;
-            _alertManagerService = alertManagerService;
+
         }
 
         public string PageHeaderText => $"{SetList?.Artist?.Name}, {SetList?.LongDate}";
@@ -30,39 +28,19 @@ namespace Phish.Desktop.Wpf.ViewModels
             get => _setList;
             set { _setList = value; RaisePropertyChanged(); }
         }
-
-        private DelegateCommand _loadedCommand;
-        public DelegateCommand LoadedCommand => _loadedCommand ?? (_loadedCommand = new DelegateCommand(LoadedCommandExecute, () => true));
-
-        protected async void LoadedCommandExecute()
+        
+        protected override async Task<bool> LoadAsync()
         {
-            await LoadAsync();
-        }
-
-        private DelegateCommand _refreshCommand;
-        public DelegateCommand RefreshCommand => _refreshCommand ?? (_refreshCommand = new DelegateCommand(RefreshCommandExecute, () => true));
-
-        protected async void RefreshCommandExecute()
-        {
-            _isLoaded = false;
-            await LoadAsync();
-        }
-
-        private bool _isLoading;
-        private bool _isLoaded;
-        private async Task<bool> LoadAsync()
-        {
-            if (_isLoading || _isLoaded)
+            if (IsLoaded || IsBusy)
             {
                 return false;
             }
 
-            _isLoading = true;
             IsBusy = true;
             IsBusyText = "Loading Random SetList...";
             await Task.Run(function: async () =>
             {
-                var randomSetlist = await _webApiClientService.GetRandomSetlistAsync();
+                var randomSetlist = await WebApiClientService.GetRandomSetlistAsync();
                 return randomSetlist;
             })
                 .ContinueWith(task =>
@@ -76,18 +54,17 @@ namespace Phish.Desktop.Wpf.ViewModels
                         }
                         else
                         {
-                            _alertManagerService.ShowAlert($"Error Occurred Loading Random Setlist", task.Exception.ToString());
+                            AlertManagerService.ShowAlert($"Error Occurred Loading Random Setlist", task.Exception.ToString());
                         }
                     }
                     catch (Exception e)
                     {
-                        _alertManagerService.ShowAlert($"Error Occurred Loading Random Setlist", e.ToString());
+                        AlertManagerService.ShowAlert($"Error Occurred Loading Random Setlist", e.ToString());
                     }
                     finally
                     {
                         IsBusy = false;
-                        _isLoading = false;
-                        _isLoaded = true;
+                        IsLoaded = true;
                     }
                 }, TaskScheduler.FromCurrentSynchronizationContext());
             return true;

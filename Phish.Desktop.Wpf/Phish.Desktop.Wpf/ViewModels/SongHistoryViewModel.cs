@@ -14,14 +14,11 @@ namespace Phish.Desktop.Wpf.ViewModels
 {
     public class SongHistoryViewModel : BusyAwareViewModelBase
     {
-        private readonly IWebApiClientService _webApiClientService;
-        private readonly IAlertManagerService _alertManagerService;
-
+   
         public SongHistoryViewModel(IWebApiClientService webApiClientService,
             IAlertManagerService alertManagerService)
+        :base(webApiClientService,alertManagerService)
         {
-            _webApiClientService = webApiClientService;
-            _alertManagerService = alertManagerService;
             Songs = new ObservableCollection<Song>();
             Originals = new ObservableCollection<Song>();
             Covers = new ObservableCollection<Song>();
@@ -40,37 +37,17 @@ namespace Phish.Desktop.Wpf.ViewModels
 
         public ObservableCollection<Song> Aliases { get; set; }
 
-        private DelegateCommand _loadedCommand;
-
-        public DelegateCommand LoadedCommand => _loadedCommand ?? (_loadedCommand = new DelegateCommand(LoadedCommandExecute, () => true));
-
-        protected async void LoadedCommandExecute()
+        protected override async Task<bool> LoadAsync()
         {
-            await LoadAsync();
-        }
-
-        private DelegateCommand _refreshCommand;
-        public DelegateCommand RefreshCommand => _refreshCommand ?? (_refreshCommand = new DelegateCommand(RefreshCommandExecute, () => true));
-
-        protected async void RefreshCommandExecute()
-        {
-            _isLoaded = false;
-            await LoadAsync();
-        }
-
-        private bool _isLoading;
-        private bool _isLoaded;
-
-        private async Task<bool> LoadAsync()
-        {
-            if (_isLoading || _isLoaded) return false;
-
-            _isLoading = true;
+            if (IsLoaded || IsBusy)
+            {
+                return false;
+            }
             IsBusy = true;
             IsBusyText = "Loading Song History...";
             await Task.Run(async () =>
                 {
-                    var randomSetlist = await _webApiClientService.GetSongsAsync();
+                    var randomSetlist = await WebApiClientService.GetSongsAsync();
                     return randomSetlist;
                 })
                 .ContinueWith(task =>
@@ -100,18 +77,17 @@ namespace Phish.Desktop.Wpf.ViewModels
                         }
                         else
                         {
-                            _alertManagerService.ShowAlert("Error Occurred Loading Song History", task.Exception.ToString());
+                            AlertManagerService.ShowAlert("Error Occurred Loading Song History", task.Exception.ToString());
                         }
                     }
                     catch (Exception e)
                     {
-                        _alertManagerService.ShowAlert("Error Occurred Loading Song History", e.ToString());
+                        AlertManagerService.ShowAlert("Error Occurred Loading Song History", e.ToString());
                     }
                     finally
                     {
                         IsBusy = false;
-                        _isLoading = false;
-                        _isLoaded = true;
+                        IsLoaded = true;
                         task.Dispose();
                     }
                 }, TaskScheduler.FromCurrentSynchronizationContext());
