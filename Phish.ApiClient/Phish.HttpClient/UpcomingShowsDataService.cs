@@ -8,16 +8,11 @@ using Phish.Domain;
 
 namespace Phish.HttpClient
 {
-    public class UpcomingShowsDataService : IUpcomingShowsDataService
+    public class UpcomingShowsDataService : HttpClientDataServiceBase, IUpcomingShowsDataService
     {
-        protected readonly System.Net.Http.HttpClient Client;
-        protected readonly IMemoryCache MemoryCache;
-
         public UpcomingShowsDataService(System.Net.Http.HttpClient client, IMemoryCache memoryCache)
+            : base(client, memoryCache)
         {
-            Client = client;
-            MemoryCache = memoryCache;
-            client.BaseAddress = new Uri("https://www.phish.net/");
         }
 
         public async Task<IEnumerable<UpcomingShow>> GetUpcomingShowsAsync()

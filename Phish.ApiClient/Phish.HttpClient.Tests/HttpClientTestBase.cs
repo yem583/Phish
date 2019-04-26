@@ -29,6 +29,10 @@ namespace Phish.HttpClient.Tests
                 AddTransientHttpErrorPolicy(p => p.WaitAndRetryAsync(3, _ => TimeSpan.FromMilliseconds(600)));
             ServiceCollection.AddHttpClient<IUpcomingShowsDataService,UpcomingShowsDataService>().
                 AddTransientHttpErrorPolicy(p => p.WaitAndRetryAsync(3, _ => TimeSpan.FromMilliseconds(600)));
+            ServiceCollection.AddHttpClient<ITopRatedShowsDataService,TopRatedShowsDataService>().
+                AddTransientHttpErrorPolicy(p => p.WaitAndRetryAsync(3, _ => TimeSpan.FromMilliseconds(600)));
+            ServiceCollection.AddHttpClient<IShowGapsDataService,ShowGapsDataService>().
+                AddTransientHttpErrorPolicy(p => p.WaitAndRetryAsync(3, _ => TimeSpan.FromMilliseconds(600)));
 
         }
 

@@ -8,16 +8,12 @@ using Phish.Domain;
 
 namespace Phish.HttpClient
 {
-    public class SongDataService : ISongDataService
+    public class SongDataService : HttpClientDataServiceBase, ISongDataService
     {
-        protected readonly System.Net.Http.HttpClient Client;
-        protected readonly IMemoryCache MemoryCache;
-
         public SongDataService(System.Net.Http.HttpClient client, IMemoryCache memoryCache)
+            :base(client,memoryCache)
         {
-            Client = client;
-            MemoryCache = memoryCache;
-            client.BaseAddress = new Uri("https://www.phish.net/");
+
         }
 
         public async Task<IEnumerable<Song>> GetSongsAsync()
