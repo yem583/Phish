@@ -16,7 +16,7 @@ namespace Phish.HttpClient
         {
         }
 
-        public async Task<IEnumerable<ShowGap>> GetShowGapAsync()
+        public async Task<IEnumerable<ShowGap>> GetShowGapsAsync()
         {
             if (!MemoryCache.TryGetValue("_HttpShowGaps", out IEnumerable<ShowGap> cacheEntry))
             {

@@ -6,6 +6,6 @@ namespace Phish.HttpClient
 {
     public interface IShowGapsDataService
     {
-        Task<IEnumerable<ShowGap>> GetShowGapAsync();
+        Task<IEnumerable<ShowGap>> GetShowGapsAsync();
     }
 }

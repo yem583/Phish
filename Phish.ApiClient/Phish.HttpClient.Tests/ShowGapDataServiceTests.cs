@@ -12,7 +12,7 @@ namespace Phish.HttpClient.Tests
         public async Task GetVenuesAsyncTest()
         {
             var showGapsDataService = ServiceProvider.GetService<IShowGapsDataService>();
-            var showGaps = await showGapsDataService.GetShowGapAsync();
+            var showGaps = await showGapsDataService.GetShowGapsAsync();
             Assert.IsNotNull(showGaps);
             Assert.IsTrue(showGaps.Any());
 
